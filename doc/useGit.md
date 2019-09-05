@@ -1,0 +1,104 @@
+#use git
+1 初始化git
+git init
+
+2 添加py文件到本地仓库
+git add ***.py(添加到暂存区)
+git commit ***.py -m '注释'（添加到版本库）
+
+3 查看git记录
+git log -2（最近两次）
+
+4 撤销版本回退
+git reflog(查看需要的版本号)
+git reset --hard bad9adt(版本号)
+
+想要远程提交代码只需在步骤2的commit命令后面加一步：git push
+
+5 删除远程仓库中的文件或目录
+git rm -r --cached page/__init__.py
+git commit -m '删除文件'
+git pus
+
+6 分支管理
+- 创建
+  a. 创建一个本地分支
+    [ethan@ubuntu:minifs]$ git branch test
+  b. 将本地分支同步到GitHub上面: 这个时候你就可以在github看到一个新的分支
+    [ethan@ubuntu:minifs]$ git push origin test
+  c. 切换到新建立的分支： 
+    [ethan@ubuntu:minifs]$ git checkout test
+  d. 推送新的修改的新的分支
+    [ethan@ubuntu:minifs]$ git push -u origin test 
+
+- 删除
+  a. 从本地删除一个分支
+    [ethan@ubuntu:minifs]$ git branch -D test 
+  b.  同步到GitHub上面删除这个分支
+    [ethan@ubuntu:minifs]$ git push origin :test
+
+7 代码对比git diff
+#执行 git diff 来查看执行 git status 的结果的详细信息。
+#git diff 命令显示已写入缓存与已修改但尚未写入缓存的改动的区别。git diff 有三个主要的应用场景。
+git diff            #未缓存与已经缓存的对比
+git diff --cached   #已缓存与仓库的对比
+git diff HEAD       #未缓存以及已经缓存与仓库的对比
+​
+#后面跟上两个提交号，可以比较两次修改内容
+
+8 Git的使用注意事项
+
+1. 代码提交流程
+代码的提交流程需要严格遵守，不仅能提高效率还能避免出错。
+
+git branch检查当前分支是否在master，若不在master ，使用git checkout master 切换至master；
+git pull origin master, 拉取最新的master代码；
+根据目的（feature/bugfix/release等）创建本地分支，如：feature/xx; bugfix/xx; release/1.0;
+修改本地代码，如果修改代码时间较长，至少每天push一次代码到服务器
+修改完成后，push 到对应分支，提交merge request
+若果Merge request有 comments，需要修改后，再次提交到对应分支
+Comments修改完毕，切无新增，该分支会被merge到master
+修改的分支merge到master后，删除本地分支 
+禁止：在merge后的分支上修改代码或新建其他分支； 
+禁止：修改他人的code； 
+
+2.提交冲突的解决办法
+当你修改代码完成，准备提交时，git提示服务器代码已经修改，你需要如下步骤操作.
+
+git pull 对应分支的代码，如果代码与本地有冲突，会有conflict提示，切会提示哪些文件有冲突
+手动逐个文件修改冲突，保留有效有改部分
+修改完成后，git add 和git commit
+最后git push 
+禁止：有冲突使用新开分支提交
+
+注:ssh公私钥生成
+ssh-keygen -t rsa -C "youremail@youremail.com"
+测试ssh连接
+ssh -T git@coding.net
+ssh -T git@github.com
+
+#常用代码托管平台
+1、GitHub
+关于GItHub相信大家都有耳闻，我就不详细介绍了。GitHub地址：https://github.com/
+
+2 gitlab
+提到GitHub就会自然的想到Gitlab,Gitlab支持无限的公有项目和私有项目。Gitlab地址：https://about.gitlab.com/，
+
+3 Bitbucket
+bitbucket免费支持5个开发成员的团队创建无限私有代码托管库。bitbucket地址：https://bitbucket.org/
+
+4 (推荐)开源中国代码托管
+前面说的都是国外的，下面来说几个国内的。开源中国一个账号最多可以创建1000个项目，包含公有和私有，开源中国代码托管地址：http://git.oschina.net/
+
+开源中国在几个月前又发布了团队协作开发平台，和代码托管平台一起，打造了一个十分好的团队开发平台，开源中国团队协作平台地址：http://team.oschina.net/，团队协作平台支持任务的创建、讨论、便签等
+
+5 (推荐)coding.net
+谈到coding.net,首先必须提的是速度快，功能与开源中国相似，同样一个账号最多可以创建1000个项目，也支持任务的创建等。coding.net地址：https://coding.net/home.html
+
+6 CSDN代码托管
+CSDN代码托管地址：https://code.csdn.net/
+
+7 京东代码托管平台
+京东代码托管平台地址：https://code.jd.com/
+
+
