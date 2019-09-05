@@ -81,7 +81,6 @@ def _recordDesc(curData,desc):
 #curData -
 def _memory(curData,data,level,dest):
     if level == 2:#condition
-        
         pass
     elif level == 1:#method
         pass
