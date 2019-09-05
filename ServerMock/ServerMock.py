@@ -78,8 +78,18 @@ def _recordDesc(curData,desc):
 
         
 #缓存清理、转储
-def _memory(curData,data,level):
-
+#curData -
+def _memory(curData,data,level,dest):
+    if level == 2:#condition
+        
+        pass
+    elif level == 1:#method
+        pass
+    elif level == 0:#url
+        pass
+    else:
+        return
+        
 
 
 
