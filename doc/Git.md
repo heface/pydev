@@ -1,3 +1,43 @@
+#GIT设置SSH KEY
+一 、设置git：
+设置git的user name和email：
+$ git config --global user.name "xxx"
+$ git config --global user.email "xxx@gmail.com"
+查看git配置：
+$git config --lis
+二、生成SSH密钥过程：
+1.查看是否已经有了ssh密钥：cd ~/.ssh
+如果没有密钥则不会有此文件夹，有则备份删除
+2.生存密钥：
+$ ssh-keygen -t rsa -C "gudujianjsk@gmail.com"
+按3个回车，密码为空这里一般不使用密钥。
+最后得到了两个文件：id_rsa和id_rsa.pub
+3.添加 私密钥 到ssh：ssh-add id_rsa
+需要之前输入密码（如果有）。 
+4.在github上添加ssh密钥，这要添加的是“id_rsa.pub”里面的公钥。
+打开 http://github.com,登陆xushichao，然后添加ssh。
+注意在这里由于直接复制粘帖公钥，可能会导致增加一些字符或者减少些字符，最好用系统工具xclip来做这些事情。
+xclip -selection c  id_rsa.pub
+注意：密匙生成就不要改了，如果已经生成到~/.ssh文件夹下去找。
+id_rsa.pub文件内容全部弄到github上。
+首先用如下命令（如未特别说明，所有命令均默认在Git Bash工具下执行）检查一下用户名和邮箱是否配置（github支持我们用用户名或邮箱登录）：
+git config --global  --list
+如未配置，则执行以下命令进行配置：
+git config --global  user.name "这里换上你的用户名"
+git config --global user.email "这里换上你的邮箱"
+
+然后执行以下命令生成秘钥：
+ssh-keygen -t rsa -C "这里换上你的邮箱"
+
+执行命令后需要进行3次或4次确认：
+    确认秘钥的保存路径（如果不需要改路径则直接回车）；
+    如果上一步置顶的保存路径下已经有秘钥文件，则需要确认是否覆盖（如果之前的秘钥不再需要则直接回车覆盖，如需要则手动拷贝到其他目录后再覆盖）；
+    创建密码（如果不需要密码则直接回车）；
+    确认密码；
+
+再次尝试用git方式下载，可以看到已经可以正常下载： 
+git clone git@github.com:heface/pydev
+
 #use git
 1 初始化git
 git init
@@ -38,13 +78,13 @@ git pus
     [ethan@ubuntu:minifs]$ git push origin :test
 
 7 代码对比git diff
-#执行 git diff 来查看执行 git status 的结果的详细信息。
-#git diff 命令显示已写入缓存与已修改但尚未写入缓存的改动的区别。git diff 有三个主要的应用场景。
+执行 git diff 来查看执行 git status 的结果的详细信息。
+git diff 命令显示已写入缓存与已修改但尚未写入缓存的改动的区别。git diff 有三个主要的应用场景。
 git diff            #未缓存与已经缓存的对比
 git diff --cached   #已缓存与仓库的对比
 git diff HEAD       #未缓存以及已经缓存与仓库的对比
 ​
-#后面跟上两个提交号，可以比较两次修改内容
+后面跟上两个提交号，可以比较两次修改内容
 
 8 Git的使用注意事项
 
