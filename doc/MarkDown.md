@@ -1,5 +1,4 @@
 #如何在Linux下使用Markdown进行文档工作
-
 在Linux系统中，编辑markdown可以用retext工具：
 sudo apt-get install retext
 retext Release-Notes.md
@@ -123,7 +122,7 @@ sslusecabundle
 我建议斜体字标记采用单个星号（*），加粗字体采用两个星号（**），这样使用起来就方便多了。当然，这个问题本身在于markdown说用星号或下划线都可以。但实际上，两个都支持反倒会造成一些问题。比如有的地方用下划线（__粗体__ -> 粗体），有的地方用星号（**粗体** -> 粗体），看起来反倒混乱不堪（选星号*的另一个理由是下划线在内容中出现的概率比星号高很多）。
 
 
-pandoc
+#pandoc
 If you need to convert files from one markup format into another, pandoc is your swiss-army knife. Pandoc can convert between the following formats:
 
 (← = conversion from; → = conversion to; ↔︎ = conversion from and to)
