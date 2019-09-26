@@ -3,10 +3,87 @@
 
 #安装后要做的事
 ##1. 更新系统
-第一件事情是重中之重，就是让你的系统保持时刻最新。赶紧在终端中运行以下命令吧。
-    $ sudo apt-get update
-    $ sudo apt-get upgrade
+由于linux默认apt源为国外源，网速太慢，所以不建议使用默认apt源，建议使用国内源。<br>
+备份原文件：sudo cp /etc/apt/sources.list /etc/apt/sources.list.buckup<br>
+编辑原文件：sudo gedit /etc/apt/sources.list<br>
+国内源可以换成清华的，文件里保存的具体内容可以访问链接https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/，根据Linux版本选择对应的文件内容，<br>
+如版本选择的是Ubuntu18.04 LTS，内容如下：<br>
+```
+# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
+# 预发布软件源，不建议启用
+# deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
+```
+
+第一件事情是重中之重，就是让系统保持时刻最新，终端中运行以下命令。  
+    $ sudo apt-get update  
+    $ sudo apt-get upgrade  
 或者，你也可以使用更新管理器（mintUpdate）来干这事，你可以在菜单（Menu）> 管理（Administration）中找到它。
+
+##2.安装常用工具
+    $ sudo apt-get vim
+    $ sudo apt-get emacs
+    $ sudo apt-get retext
+    $ sudo apt-get tldr
+    $ sudo apt-get git
+
+##3.配置git并获取最新代码
+一 、
+设置Git的user name和email：  
+$ git config --global user.name "heface"  
+$ git config --global user.email "heface@163.com"  
+
+二、生成SSH密钥：  
+1.查看是否已经有了ssh密钥：cd ~/.ssh  
+如果没有密钥则不会有此文件夹，有则备份删除  
+2.生成密钥：  
+```
+$ ssh-keygen -t rsa -C “email@email.com”
+按3个回车，密码为空。
+（email@email.com是github的账号，即上面的email）
+
+Your identification has been saved in /home/tekkub/.ssh/id_rsa.
+Your public key has been saved in /home/tekkub/.ssh/id_rsa.pub.
+The key fingerprint is:
+………………
+```
+最后得到了两个文件：id_rsa和id_rsa.pub
+
+3.添加id_rsa密钥到ssh，命令为：ssh-add 文件名  
+   如果出现error：Could not open a connection to your authentication agent.  
+   则先执行：$ssh-agent bash  
+   然后再执行：$ssh-add id_rsa  
+   
+4.在github上添加ssh密钥，这要添加的是“id_rsa.pub”里面的公钥。  
+打开https://github.com/ ，登陆，复制id_rsa.pub里面的内容添加ssh。  
+如果直接从Linux上复制id_rsa.pub的内容，可能会复制里面的换行符，而key是没有换行符的，直接复制可能会出现下面的错误提示：  
+```
+Key is invalid
+Fingerprint has already been taken
+Fingerprint cannot be generated
+```
+解决方案：  
+       $cat id_rsa.pub  
+然后复制里面的内容，就OK了！  
+5.测试：ssh git@github.com  连接成功！
+```
+PTY allocation request failed on channel 0
+Welcome to GitLab, ***!
+Connection to github.com closed.
+```
+
+三、 开始使用github  
+1.获取源码(在本地创建一个目录，进入目录git clone)：  
+$ git clone git@github.com:heface/pydev.git  
+其他git使用不再详述。  
 
 ##2. 多安装些浏览器
 Linux Mint 17默认安装了firefox，你也可以获得更多的浏览器，如Chronium和Google Chrome。
@@ -39,7 +116,7 @@ Copy是另外一个云存储解决方案，它也有本地Linux客户端。详�
 
 ##6. 安装rar和其它归档工具
 要想在Nemo这样的文件管理器中通过上下文菜单创建rar归档，请安装rar工具。安装rar的同时，也可安装其它几个包以增加对其它归档格式的支持。
-    $ sudo apt-get install unace p7zip-rar sharutils rar arj lunzip lzip
+    $ 
     
 ##7. 安装剪贴板管理器
 剪贴板管理器允许你维护和访问通过像Ctr+C这样的操作拷贝的项目历史，gnome下有很多的剪贴板管理器，像diodon，clipit，glipper，parcellite。
@@ -966,3 +1043,132 @@ tar [-ABcdgGhiklmMoOpPrRsStuUvwWxzZ][-b <区块数目>][-C <目的目录>][-f <�
         dd if=ubuntu-16.0.3-desktop-amd64.iso of=/dev/sdb
         (注意，/dev/sdb后面不要带1或者2的数字)
 经过以上四步就制作好了U盘安装盘，重启PC，选择从U盘启动就可以开心地重装系统了。
+
+#LinuxMint调节屏幕亮度
+##方法〇
+鼠标点击桌面右下角电池图标，有显示亮度滚动条，拖动调整即可。
+
+##方法一
+1.打开一个终端，查看本机最大亮度值。
+输入命令：
+cat /sys/class/backlight/acpi_video0/max_brightness
+15
+注：如果是双显卡，则/sys/class/backlight/下还有video1和intel_backlight目录，各自里面都有max_brightness和actual_brightness，表示最大亮度和实际亮度。默认一般使用video0下面的。
+2.打开文本编辑器。一般是gedit或者pluma。把下面这几行代码复制到文本编辑器中，保存为.mybrt.sh。注意，这个文件名是以.开头的隐藏文件。这段代码的意思是把亮度设为7。前面我们查看了最大亮度是15，所以设置为7已经很不错。当然你可以修改这个数字为自己喜欢的亮度值。
+\#!/bin/sh
+\#change brightness setting on startup or resume
+pkexec /usr/lib/gnome-settings-daemon/gsd-backlight-helper --set-brightness 7
+
+3.为.mybrt.sh文件添加执行属性。打开终端，输入命令：chmod +x .mybrt.sh。
+4.设置开机登录自动运行亮度脚本（即刚才新建的那个.mybrt.sh），这样就每次开机都可以恢复为我们需要的亮度了。在终端中输入命令：
+gsettings set org.gnome.settings-daemon.peripherals.input-devices hotplug-command "/home/who/.mybrt.sh"
+注意：把who换成你的用户名。
+经过此番设置，你的笔记本电脑无论是重启、注销还是合上屏幕、待机等情况，一旦进入桌面后，屏幕亮度就会自动恢复为我们设置好的亮度值。这个方法很简单，也无需安装其他软件，或者修改系统配置文件。
+值得注意的是，这个办法只对采用Gnome3桌面环境的Linux系统有效，如Ubuntu11.04以后的版本、Linuxdeepin12.06、Linuxmint13 Cinnamon版等。对Linuxmint13 mate版无效。
+
+##方法二
+我使用的Mint Linux的调整亮度的界面程序设置后亮度没有变化，那就只有玩儿一下有“深度”的了，直接修改配置文件的值就OK了，直接修改管理亮度的文件/sys/class/backlight/intel_backlight/brightness 中的值，
+直接使用命令：echo 100 >/sys/class/backlight/intel_backlight/brightness   即是将屏幕的亮度调整到100,就是调暗的节奏了；
+要亮度很高那就使用命令：echo 1000 >/sys/class/backlight/intel_backlight/brightness 调整到最亮了；
+
+##方法三
+xrandr的man文档解释是：
+    primitive command line interface to RandR extension
+    “原始的命令行下的RandR扩展”
+但是什么是RandR呢？Wiki的定义如下：
+    RandR (“resize and rotate”) is a communications protocol written as an extension to the X11 and Wayland protocols for display servers.
+可以看出，RandR是一个调整显示用的协议。
+
+xrandr最基本的用途是调整显示器的分辨率。在输入xrandr之后，会列出所有显示设备的状态和支持的分辨率。使用-s参数可以设置希望的分辨率。具体可见Linux下使用 xrandr 命令设置屏幕分辨率。
+至于设置屏幕的亮度，可以有以下步骤：
+输入xrandr，查看输出中状态是connected的显示设备，如LVDS。具体命令可以是：
+xrandr | grep -v disconnected | grep connected
+
+调整亮度：
+xrandr --output LVDS --brightness 0.5
+注：output后面的参数为上一步中查出的显示设备，不同主机结果可能不同。brightness后面的参数范围是0-1，0为全黑，1为最亮。
+
+最后，将这个常用的功能写为一个脚本：
+#! /bin/bash
+if [ $# -ne 1 ] ; then
+    echo "Usage: setbrightness <0.0-0.1>"
+    exit 1
+fi
+
+xrandr --output LVDS --brightness $1
+
+所有用户加入执行权限：
+chmod a+x setbrightness
+移至应用程序目录下，以便可以直接使用：
+mv setbrightness /usr/local/bin
+现在就可以直接设置显示器的亮度了！
+
+#查看硬件信息
+##1 hardinfo命令
+此命令会以图形化方式显示硬件信息，如果没有可以用sudo apt install hardinfo安装
+##2 查看CPU及内存信息
+查看CPU：
+cat /proc/cpuinfo
+该命令可以查看系统CPU有多少个核，频率，特性等等。
+
+查看cpu内核频率
+cat /proc/cpuinfo |grep MHz|uniq
+cpu MHz         : 27518.499
+
+查看内存：
+#cat /proc/meminfo
+这个命令只能看当前内存大小，已用空间等等。
+
+要查看内存型号、频率，使用命令(使用root才行)：
+dmidecode -t memory
+输出示例：
+Memory Device
+        Array Handle: 0x0012
+        Error Information Handle: No Error
+        Total Width: 64 bits
+        Data Width: 64 bits
+        Size: 4096 MB
+        Form Factor: SODIMM
+        Set: None
+        Locator: DIMM0
+        Bank Locator: BANK 0
+        Type: DDR3
+        Type Detail: Synchronous
+        Speed: 1333 MHz
+        Manufacturer: 00
+        Serial Number: 00000000
+        Asset Tag: Unknown
+        Part Number:                   
+        Rank: Unknown
+        Configured Clock Speed: 1333 MHz
+
+查看系统运行时间：
+cat /proc/uptime
+65923.93 65697.26
+
+查看内核IO地址映射：
+cat /proc/iomem
+
+查看上一次登陆：
+last /var/log/wtmp 
+（如不存在，直接touch生成。可用rm删除 ）
+
+内核版本：
+cat /proc/version 
+
+
+查看内核函数：
+cat /proc/kallsyms
+
+
+查看系统启动参数：
+cat /proc/cmdline 
+磁盘信息(这个文件一般人看不懂，有工具就是分析这个文件得到磁盘性能信息的)：
+cat /proc/diskstats 
+
+
+查看中断：
+cat /proc/interrupts 
+清空内存：
+echo 2 > /proc/sys/vm/overcommit_memory  
+

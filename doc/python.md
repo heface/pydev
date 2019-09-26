@@ -18,11 +18,11 @@ index-url = https://pypi.douban.com/simple/
 #Linux环境安装jupyter
 如果你是python3的就使用如下命令安装
 python3 -m pip install --upgrade pip
-python3 -m pip install jupyter
+sudo python3 -m pip install jupyter -i https://pypi.tuna.tsinghua.edu.cn/simple/
 
 如果你的Python版本是Python 2
 python -m pip install --upgrade pip
-python -m pip install jupyter
+sudo python -m pip install jupyter -i https://pypi.tuna.tsinghua.edu.cn/simple/
 
 选择适应你自己版本的安装方法后，在终端中输入以下语句，检测是否安装成功
 jupyter notebook
@@ -42,6 +42,18 @@ pip install --ignore-installed scikit-learn
 
 郁闷，没搞定，改成安装anaconda???
 
+安装jupyter时报错：
+ModuleNotFoundError: No module named 'setuptools'
+解决方案：
+sudo python3 -m pip install setuptools -i https://pypi.tuna.tsinghua.edu.cn/simple/
+
+安装setuptools,命令如下：
+    wget --no-check-certificate  https://pypi.python.org/packages/source/s/setuptools/setuptools-19.6.tar.gz#md5=c607dd118eae682c44ed146367a17e26
+    tar -zxvf setuptools-19.6.tar.gz
+    cd setuptools-19.6
+    python3 setup.py build
+    python3 setup.py install
+
 #conda更改为国内镜像源。
 终端中运行命令：<br>
 (1)清华源(TUNA)<br>
@@ -56,6 +68,9 @@ conda config --setshow_channel_urls yes<br>
 
 
 #清华大学开源镜像站anaconda
+安装命令：
+sudo sh Anaxxxx.sh
+
 网址：https://mirror.tuna.tsinghua.edu.cn/help/anaconda/
 Anaconda 镜像使用帮助
 Anaconda 是一个用于科学计算的 Python 发行版，支持 Linux, Mac, Windows, 包含了众多流行的科学计算、数据分析的 Python 包。

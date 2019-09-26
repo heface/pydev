@@ -158,7 +158,7 @@ show_channel_urls: true
 安装Kras,执行命令：
 1 conda install keras
 
-安装keras过程中，会自动暗转所需的TensorFlow
+安装keras过程中，会自动安装所需的TensorFlow
 
 至此，深度学习，机器学习开发环境就已经安装完毕了，可以通过命令
 1 spyder
@@ -209,6 +209,7 @@ conda create -n tensorflow python=3.5（这里注意，tensorflow目前只支持
 --conda create -n keras python=3.6
 activate tensorflow （ 激活，激活之后环境前面就是以这种形式显示的：(tensorflow)C:> ）
 --conda activate keras
+注意：由于新建的虚拟环境，所以没有numpy,pandas,matplotlib等，需要手动安装conda install xxx
 
 3.CPU版本的tensorflow，如果需要安装GPU版本的自行搜索哦。输入以下命令：
 pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/windows/cpu/tensorflow-1.1.0-cp35-cp35m-win_amd64.whl
