@@ -333,3 +333,9 @@ exit
 在使用pip的相关命令时，使用国内源的速度更快：如下是使用了清华的国内源。
  pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/ --user
 这样会将Python 程序包安装到 $HOME/.local 路径下，其中包含三个字文件夹：bin，lib 和 share。
+
+
+#win7下virtualENV安装配置步骤
+1 安装python（不详述）
+2 安装virtualenvwrapper
+pip install virtualenvwrapper -i https://pypi.tuna.tsinghua.edu.cn/simple/
