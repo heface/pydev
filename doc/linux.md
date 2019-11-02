@@ -1,13 +1,12 @@
 #Linux使用技巧
 [toc]
-
-#安装后要做的事
+S
 ##1. 更新系统
-由于linux默认apt源为国外源，网速太慢，所以不建议使用默认apt源，建议使用国内源。<br>
-备份原文件：sudo cp /etc/apt/sources.list /etc/apt/sources.list.buckup<br>
-编辑原文件：sudo gedit /etc/apt/sources.list<br>
-国内源可以换成清华的，文件里保存的具体内容可以访问链接https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/，根据Linux版本选择对应的文件内容，<br>
-如版本选择的是Ubuntu18.04 LTS，内容如下：<br>
+由于linux默认apt源为国外源，网速太慢，所以不建议使用默认apt源，建议使用国内源。  
+备份原文件：sudo cp /etc/apt/sources.list /etc/apt/sources.list.buckup  
+编辑原文件：sudo gedit /etc/apt/sources.list  
+国内源可以换成清华的，文件里保存的具体内容可以访问链接https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/，根据Linux版本选择对应的文件内容，  
+如版本选择的是Ubuntu18.04 LTS，内容如下：  
 ```
 # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse
@@ -86,26 +85,28 @@ $ git clone git@github.com:heface/pydev.git
 其他git使用不再详述。  
 
 ##2. 多安装些浏览器
-Linux Mint 17默认安装了firefox，你也可以获得更多的浏览器，如Chronium和Google Chrome。
-Chronium浏览器可以在仓库中获取。
-    $ sudo apt-get install chromium-browser
-至于Google Chrome，请访问google.com/chrome下载deb包，并使用gdebi来安装。
+Linux Mint 17默认安装了firefox，你也可以获得更多的浏览器，如Chronium和Google Chrome。  
+Chronium浏览器可以在仓库中获取。  
+    $ sudo apt-get install chromium-browser  
+至于Google Chrome，请访问google.com/chrome下载deb包，并使用gdebi来安装。  
+```
     # 64 位
     $ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     $ sudo gdebi google-chrome-stable_current_amd64.deb     
     # 32 位
     $ wget https://dl.google.com/linux/direct/google-chrome-stable_current_i386.deb
     $ sudo gdebi google-chrome-stable_current_i386.deb
+```
 ##3. 安装多媒体解码
-受限的额外包可以帮你安装大多数基本的解码，可以让你播放像mp3这样的格式。它也会帮你安装微软字体。
+受限的额外包可以帮你安装大多数基本的解码，可以让你播放像mp3这样的格式。它也会帮你安装微软字体。  
     $ sudo apt-get install ubuntu-restricted-extras
 
-要启用加密dvd的回放，请安装以下包。
+要启用加密dvd的回放，请安装以下包。  
     $ sudo apt-get install libdvdread4
     $ sudo /usr/share/doc/libdvdread4/install-css.sh
 
 ##4. 安装专有驱动
-如果你有一张Nvidia或者ati的图形卡，或者broadcom的无线网卡，那么请安装厂商提供的专有驱动，这些驱动会为你带来最佳的硬件性能。
+如果你有一张Nvidia或者ati的图形卡，或者broadcom的无线网卡，那么请安装厂商提供的专有驱动，这些驱动会为你带来最佳的硬件性能。  
 要安装Nvidia驱动，你可以参照先前的这篇文章 ：如何在Linux Mint上安装最新的Nvidia驱动（http://www.binarytides.com/install-nvidia-drivers-linux-mint-16/）
 
 ##5. 安装Dropbox
@@ -119,57 +120,60 @@ Copy是另外一个云存储解决方案，它也有本地Linux客户端。详�
     $ 
     
 ##7. 安装剪贴板管理器
-剪贴板管理器允许你维护和访问通过像Ctr+C这样的操作拷贝的项目历史，gnome下有很多的剪贴板管理器，像diodon，clipit，glipper，parcellite。
+剪贴板管理器允许你维护和访问通过像Ctr+C这样的操作拷贝的项目历史，gnome下有很多的剪贴板管理器，像diodon，clipit，glipper，parcellite。  
 Diodon在cinnamon桌面上似乎存在一些问题，在历史列表增长时会出现滚动条。Clipit和Gipper工作得很好，你也可以安装
+```
     $ sudo apt-get install glipper
     # 或者
     $ sudo apt-get install clipit
+```
 然后，你可以从应用程序菜单中启动它们，它们应该会在你每次登录时启动。
 
 ##8. 修改Firefox的搜索引擎
-你也许注意到，Firefox默认选择了Yahoo搜索引擎，而搜索引擎列表中并没有Google。点击“管理搜索引擎” > 获取更多搜索引擎，它会带你去 http://www.linuxmint.com/searchengines.php。
+你也许注意到，Firefox默认选择了Yahoo搜索引擎，而搜索引擎列表中并没有Google。点击“管理搜索引擎” > 获取更多搜索引擎，它会带你去 http://www.linuxmint.com/searchengines.php。  
 向下拉动滚动条到商业搜索引擎部分，找到并点击Google图标。进入下一页后，再次点击搜索引擎列表，而这次你会看到“添加Google”选项，点击它就可以用上Google搜索了。（LCTT译注：墙内用户也请忽略此条。怒！）
 
 ##9. Uget下载管理器
-Uget是一个简洁而健壮的跨平台下载管理器，在Linux上工作得很好。虽然它缺少分段下载文件功能，但是仍然是一个十分稳定的下载管理器。
+Uget是一个简洁而健壮的跨平台下载管理器，在Linux上工作得很好。虽然它缺少分段下载文件功能，但是仍然是一个十分稳定的下载管理器。  
 $ sudo apt-get install uget
 
 ##10. Deluge BitTorrent客户端
-Linux Mint自带了Transmission，这是个简洁而高效的torrent客户端。如果正在寻找一个更有特色的torrent客户端，那么你可以试试deluge或者vuze（正式名称是azureus），还可以试试qbittorent。
+Linux Mint自带了Transmission，这是个简洁而高效的torrent客户端。如果正在寻找一个更有特色的torrent客户端，那么你可以试试deluge或者vuze（正式名称是azureus），还可以试试qbittorent。  
 $ sudo apt-get install deluge-torrent
 
 ##11. Hardinfo - 系统信息工具
-Hardinfo是一个十分便利的GUI工具，它可以用来报告大量完整的系统硬件信息。你可以通过它来集中查看处理器、内存、存储设备、网络配置、打印机、usb设备、声音/视频适配器等等信息。它具有测试和评估系统性能的功能。
+Hardinfo是一个十分便利的GUI工具，它可以用来报告大量完整的系统硬件信息。你可以通过它来集中查看处理器、内存、存储设备、网络配置、打印机、usb设备、声音/视频适配器等等信息。它具有测试和评估系统性能的功能。  
 $ sudo apt-get install hardinfo
 
 ##12. 安装MATE桌面环境
-除了Cinnamon，Linux Mint还自带了另一个流行的桌面环境MATE（Maatay）桌面。如果你想试试，那么就来安装吧。
-现在你可以在登陆屏幕选择MATE会话了。
+除了Cinnamon，Linux Mint还自带了另一个流行的桌面环境MATE（Maatay）桌面。如果你想试试，那么就来安装吧。  
+现在你可以在登陆屏幕选择MATE会话了。  
 $ sudo apt-get install mint-meta-mate
 
 ##13. 让其它分区可写
 如果你有其它ext分区，比如想用来存储和备份文件，那么你需要让它们可写，以免每次都要使用root特权。
-首先，使用gksudo在文件管理器里打开分区挂载目录
+首先，使用gksudo在文件管理器里打开分区挂载目录  
 $ gksudo nemo
-导航到分区目录，右击去往属性 > 权限标签
-赋予“目录访问” - 创建和删除文件权限给用户、组和其它。
-赋予“文件访问” - 读和写权限给用户、组和其它。
-对于NTFS分区，你不需要做此事。
+导航到分区目录，右击去往属性 > 权限标签  
+赋予“目录访问” - 创建和删除文件权限给用户、组和其它。  
+赋予“文件访问” - 读和写权限给用户、组和其它。  
+对于NTFS分区，你不需要做此事。  
 
 ##14. 安装Conky
-Conky是一个轻量级系统监控工具，它通过桌面图形组件显示系统各种资源的统计数据，如cpu、内存、网络等。它不是必须的，但是可以让你的桌面更加绚丽夺目。
-从应用程序菜单启动Conky管理器，并添加组件到桌面。也可以选中开机启动选项来让Conky开机启动。
+Conky是一个轻量级系统监控工具，它通过桌面图形组件显示系统各种资源的统计数据，如cpu、内存、网络等。它不是必须的，但是可以让你的桌面更加绚丽夺目。  
+从应用程序菜单启动Conky管理器，并添加组件到桌面。也可以选中开机启动选项来让Conky开机启动。  
+```
     $ sudo apt-add-repository -y ppa:teejee2008/ppa
     $ sudo apt-get update
     $ sudo apt-get install conky-manager
-
+```
 ##清除
 做完这一切后，请为系统进行一次大扫除，移除一些不必要的包。
 $ sudo apt-get autoremove
 
 ##更多应用程序
 如果你正在为你的Mint盒子寻找更多的应用程序，那么这里列出了一部分更好的应用程序，所有这些都可以在软件管理器中安装。
-    Opera - 网页浏览器
+    Opera - 网页浏览器pt
     Gnome Encfs Manager - 管理使用Encfs加密的文件和文件夹
     Smplayer - 多媒体播放器
     Rhythmbox, Clementine - 音乐播放器
@@ -208,6 +212,7 @@ $ sudo apt-get autoremove
 我常用的应用有一下几款：
 
     wps：文字处理，兼容office，再Windows下我也使用wps，要到wps网站上去下载
+    #sudo apt-get install wps-office 注：下载并安装wps-office。
     calibre：gitbook上的书可以下载epub格式的，用这个看很不错，系统自带的被我卸载了，叫什么不记得了，这个软件直接在软件管理器搜索就有
     网易云音乐：音乐软件，百度搜索网易云音乐，下载linux版本就行
     visual studio code：代码编辑器，可以代替好多软件，简单写写代码还是不错的，很多人将他直接作为IDE使用
@@ -245,13 +250,21 @@ $ sudo apt-get autoremove
 
 2、添加软件源
 终端下逐条执行（默认当前路径为～，执行以下命令过程中，请勿切换路径）：
-wget -nc https://dl.winehq.org/wine-builds/Release.key
+sudo wget -nc https://dl.winehq.org/wine-builds/Release.key
 sudo apt-key add Release.key
 sudo apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
 
 3、更新
 终端下执行：sudo apt update
-
+报错：
+错误:13 https://dl.winehq.org/wine-builds/ubuntu bionic InRelease
+  由于没有公钥，无法验证下列签名： NO_PUBKEY 76F1A20FF987672F
+正在读取软件包列表... 完成    
+W: GPG 错误：https://dl.winehq.org/wine-builds/ubuntu bionic InRelease: 由于没有公钥，无法验证下列签名： NO_PUBKEY 76F1A20FF987672F
+E: 仓库 “https://dl.winehq.org/wine-builds/ubuntu bionic InRelease” 没有数字签名。
+N: 无法安全地用该源进行更新，所以默认禁用该源。
+解决：
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 76F1A20FF987672F
 4、安装Wine
 终端下执行：
 稳定版：sudo apt install --install-recommends winehq-stable
@@ -331,6 +344,12 @@ $ man fim
 刚安装完Wine后，初始执行界面一般会出现诸如问号方块之类的乱码，为了便于阅读，需完善安装缺失的默认字体。
 将以下simfang.ttf、simhei.ttf、simkai.ttf、simsun.ttc字体文件复制到Wine安装路径下的字体目录/opt/wine-stable/share/wine/fonts即可，你也可以将更多字体复制到该目录下。
 就我个人而言，我将以上字体文件及微软雅黑字体文件msyh.ttf、msyhbd.ttf 复制到 Wine 字体目录即解决了界面乱码的问题。
+sudo cp /usr/share/fonts/simfang.ttf /opt/wine-stable/share/wine/fonts
+sudo cp /usr/share/fonts/simhei.ttf /opt/wine-stable/share/wine/fonts
+sudo cp /usr/share/fonts/simkai.ttf /opt/wine-stable/share/wine/fonts
+sudo cp /usr/share/fonts/simsun.ttf /opt/wine-stable/share/wine/fonts  --cp: 无法获取'/usr/share/fonts/simsun.ttf' 的文件状态(stat): 没有那个文件或目录
+sudo cp /usr/share/fonts/msyh.ttf /opt/wine-stable/share/wine/fonts
+sudo cp /usr/share/fonts/msyhbd.ttf /opt/wine-stable/share/wine/fonts
 
 3、安装Wine依赖
 一般而言，安装完Wine后，初始执行winecfg或wine或winetricks，会要求下载安装 wine-mono 和 wine-gecko，这是一个相对漫长的过程，并且中途还可能出错，有可能需要反复多次才能下载安装成功。这些依赖文件是下载安装在：~/.cache/wine 目录下的。
@@ -350,6 +369,38 @@ winetricks mfc40 mfc42
 winetricks vcrun6 vb6run vcrun2003 vcrun2005 vcrun2008
 winetricks msxml3 msxml4 msxml6
 
+'''
+---winetricks riched20 riched30---
+Executing w_do_call msls31
+Executing load_msls31 
+Executing mkdir -p /home/he/.cache/winetricks/msls31
+Executing cd /home/he/.cache/winetricks/msls31
+Downloading ftp://ftp.hp.com/pub/softlib/software/msi/InstMsiW.exe to /home/he/.cache/winetricks/msls31
+--2019-09-29 04:08:07--  ftp://ftp.hp.com/pub/softlib/software/msi/InstMsiW.exe
+           => “InstMsiW.exe”
+正在解析主机 ftp.hp.com (ftp.hp.com)... 15.73.48.57, 15.72.188.128
+正在连接 ftp.hp.com (ftp.hp.com)|15.73.48.57|:21... 已连接。
+正在以 anonymous 登录 ... 登录成功！
+==> SYST ... 完成。    ==> PWD ... 完成。
+==> TYPE I ... 完成。  ==> CWD (1) /pub/softlib/software/msi ... 完成。
+==> SIZE InstMsiW.exe ... 1822848
+==> PASV ... 
+服务器响应时发生错误，正在关闭控制连接。
+'''
+'''
+---winetricks mfc40 mfc42---
+Executing load_msls31 
+Executing cd /home/he/.cache/winetricks/msls31
+Downloading ftp://ftp.hp.com/pub/softlib/software/msi/InstMsiW.exe to /home/he/.cache/winetricks/msls31
+--2019-09-29 04:12:04--  ftp://ftp.hp.com/pub/softlib/software/msi/InstMsiW.exe
+           => “InstMsiW.exe”
+正在解析主机 ftp.hp.com (ftp.hp.com)... 15.72.236.27, 15.73.208.135
+正在连接 ftp.hp.com (ftp.hp.com)|15.72.236.27|:21... 已连接。
+Error in server response. Closing.
+重试中。
+'''
+
+
 一般来说，以上依赖也够了，对于其它的依赖，请自行再安装。
 这些依赖，将会下载安装到：~/.cache/winetricks
 下载和安装将会花费不少时间，中途还可能出现各种问题，还需要反复多次才能成功，在此，分享一个最快速的方法：
@@ -357,6 +408,8 @@ winetricks msxml3 msxml4 msxml6
 最好是将整个winetricks目录复制到~/.cache/下，合并或覆盖winetricks目录。
 特别注意：以复制方式下载安装，是省却了下载过程中的诸多问题，仍然需要执行以上winetricks命令，将依赖信息合并到Windows的注册表中，路径是在：~/.wine，
 另外，对于Windows应用程序所需的字体，是保存在：~/.wine/drive_c/windows/Fonts 路径中，你可以自行将所需的字体文件复制到该目录下即可。
+
+注：终端下执行 sh winetricks 弹出窗口中选择，也可完成安装。
 
 5、Wine设置
 在终端下执行：winecfg，即可打开wine设置窗口界面。
@@ -394,6 +447,25 @@ apt-get install winetricks
 最后启动方法是:
 wine DK4PK.exe
 
+#Linux环境WPS安装
+1.安装
+下载地址：http://community.wps.cn/download/（去WPS官网下载）
+执行安装命令：
+sudo dpkg -i wps-office_10.1.0.5672~a21_amd64.deb
+2.启动WPS for Linux后，出现提示"系统缺失字体" 。
+出现提示的原因是因为WPS for Linux没有自带windows的字体，只要在Linux系统中加载字体即可。
+具体操作步骤如下：
+下载缺失的字体文件，然后复制到Linux系统中的/usr/share/fonts文件夹中。
+国外下载地址：https://www.dropbox.com/s/lfy4hvq95ilwyw5/wps_symbol_fonts.zip
+国内下载地址：https://pan.baidu.com/s/1eS6xIzo
+下载完成后，解压并进入目录中，继续执行：
+sudo cp * /usr/share/fonts
+执行以下命令,生成字体的索引信息：
+sudo mkfontscale
+sudo mkfontdir
+运行fc-cache命令更新字体缓存。
+sudo fc-cache
+重启wps即可，字体缺失的提示不再出现。
 
 #Linux版WPS缺失字体解决方案
 1 网上下载字体文件（多为百度网盘）
@@ -435,6 +507,8 @@ https://www.dropbox.com/s/lfy4hvq95ilwyw5/wps_symbol_fonts.zip
    #mkfontdir
    #mkfontscale
    #fc-cache 
+
+注：复制windows字体（fonts.zip）后，提示缺失MT Extra字体，下载MTExtra.zip并解压到/usr/share/fonts，执行fc-cache解决。
 
 #LinuxMint设置apt源
 1 点击菜单，点击首选项。
@@ -563,7 +637,41 @@ halt 关机 reboot重启
 ssh-keygen 生成密钥
 ssh-copy-id ***  拷贝公钥到指定服务器 实现免密登录
 
+#Linux连续执行多个命令
+每条命令使用";"隔开，则无论前边的命令执行成功与否都会继续执行下一条命令
+这里，故意将第二条命令中的echo多写了一个o，命令执行出错，但并不影响后续命令的执行
+可以这么想，如果用分号来间隔命令，就相当于将命令分隔在了不同的行，无论前一行的命令成功或失败，都不影响下一行命令的执行。
+$ echo 1; echoo 2; echo 3; echo 4
+-bash: echoo: command not found
 
+若命令间使用"&&"隔开，则只有前边的命令执行成功了再会继续执行后边的命令
+这里，故意将第二条命令中的echo多写了一个o，命令执行出错，echo 3便没有执行，因此echo4也没执行
+$ echo 1 && echoo 2 && echo 3 && echo 4
+-bash: echoo: command not found
+
+若命令间使用"||"隔开，则只有前边的命令执行失败了再回继续执行后边的命令
+这里echo 1执行成功则没有继续执行后边的echo 2，继而没有执行echo 3，echo 4
+echo 1 || echo 2 || echo 3 || echo 4
+这里echoo 1执行失败，因此开始执行echo 2，执行成功，因而后边的echo 3， echo4都没执行
+echoo 1 || echo 2 || echo 3 || echo 4
+-bash: echoo: command not found
+
+根据以上规则分析几个比较特殊的例子，也即混合了集中分隔符的例子
+echo 1执行成功了，紧接着后边有两个"||"因此echo 2, echo 3都没执行，后边遇到了&&，而这之前的命令组合被认为是执行成功的，因此echo 4得以执行
+$ echo 1 || echo 2 || echo 3 && echo 4 
+
+echo 1执行成功了，继而执行echoo 2，执行失败，因此 echo 3不被执行，后边遇到了"||",而知之前的命令组合被认为是执行失败的，因此echo 4得以执行
+$ echo 1 && echoo 2 && echo 3 || echo 4
+-bash: echoo: command not found
+
+echo 1执行成功了，继而执行echoo 2，执行失败，因此 echo 3不被执行，后边遇到了";",相当于把后边的命令放到了新行，这样的话无论如何后边的命令都会执行，因此echo 4得以执行
+$ echo 1 && echoo 2 && echo 3 ; echo 4
+-bash: echoo: command not found
+
+echoo 1执行失败，后边为"||"因此echo 2得以执行，echo 2执行成功，紧接着后边有两个"||"因此echo 3，echo 4没有执行，后边遇到了&&，而之前的命令组合被认为是执行成功的，因此echoo5得以执行，执行发生错误，因此echo 6没有被执行，但后边是";"，所以无论如何echo 7都会被执行
+$ echoo 1 || echo 2 || echo 3 || echo 4 && echoo 5 && echo 6 ; echo 7
+-bash: echoo: command not found
+-bash: echoo: command not found
 
 #基础知识#
 
@@ -758,7 +866,6 @@ H: 半安装 - 卸载失败需要修复
 tips:使用aptitude可以解决python使用pip安装包的时候包的依赖问题：，如安装scipy，matplotlib的时候出现依赖包，自己去安装比较麻烦的问题：
 如：sudo aptitude install python-scipy ; sudo aptitude install python-matplotlib
 文件权限问题
-
 Linux对文件权限管理很严格，其所对应的概念如下：
 
 w:可写
@@ -766,55 +873,31 @@ r：可读
 x：可执行
 a:可追加
 
-
-
 使用ls -l可以查看每个文件的权限，如果需要修改权限可以这么做
-
 chmod u+r xxx.py
-
-    1
 
 这样xx.py就有了可读的权限，若要有读写权限使用u+wr即可，如果要删除相关的权限使用u-wr即可。另一种方式使用数字对应的u+r，比如最常见的chomd 777 xxx.py,r对应4，w对应2，有点麻烦不好记忆，使用u+r就可以了。
 
-
 ##快捷键##
 
-Linux下使用鼠标机会不多，尽量多记住一些快捷键，在工作或者学习的时候能提高效率。
-
-    前一个后一个工作区的切换
-
-    如果你经常使用工作区，那你就可以用Ctrl + Alt +上/下方向键很容易地进行切换。左箭头切换到上一个工作区，右箭头切换到下一个工作区。
-
-    把当前窗口移到另一个工作区
-
-    快捷键Shift+ Ctrl + Alt +左/右方向键让你很容易把当前窗口移到指定的工作区。这个快捷键和上面的快捷键很好配合。如果你工作时常常打开很多窗口，但又不想看到桌面 和任务栏挤满程序，你可以用这个快捷键把程序移到另 一个工作区，这样你的桌面就整洁多了。
-
-    显示桌面
-
-    Ctrl + Alt + D快捷键让你很快地最小化所有窗口，看到桌面。当所有窗口都最小化后，你再按这个快捷键就可以恢复窗口原来的状态。
-
-    鼠标右击的键盘快捷键
-
-    在大多数程序里，你可以右击显示快捷菜单。其实键盘上 Shift + F10也能达到一样的效果。
-
-    重启会话以从崩溃中恢复
-
+Linux下使用鼠标机会不多，尽量多记住一些快捷键，在工作或者学习的时候能提高效率。  
+    前一个后一个工作区的切换  
+    如果你经常使用工作区，那你就可以用Ctrl + Alt +上/下方向键很容易地进行切换。左箭头切换到上一个工作区，右箭头切换到下一个工作区。  
+    把当前窗口移到另一个工作区  
+    快捷键Shift+ Ctrl + Alt +左/右方向键让你很容易把当前窗口移到指定的工作区。这个快捷键和上面的快捷键很好配合。如果你工作时常常打开很多窗口，但又不想看到桌面 和任务栏挤满程序，你可以用这个快捷键把程序移到另 一个工作区，这样你的桌面就整洁多了。  
+    显示桌面  
+    Ctrl + Alt + D快捷键让你很快地最小化所有窗口，看到桌面。当所有窗口都最小化后，你再按这个快捷键就可以恢复窗口原来的状态。  
+    鼠标右击的键盘快捷键  
+    在大多数程序里，你可以右击显示快捷菜单。其实键盘上 Shift + F10也能达到一样的效果。  
+    重启会话以从崩溃中恢复  
     按下Ctrl + Alt + Backspace来重启会话，恢复的可能达90%。
-
     快速锁定屏幕
-
     如果你需要离开 电脑 一会儿，可以按下Ctrl + Alt + L很快地锁定屏幕，以防有人使用
-
     反向切换窗口
-
     Alt + Tab是切换窗口的快捷键。如果你再按下SHIft，你就可以反向切换窗口。这个快捷键很有用，当你Alt + Tab按得太快，错过了你想要切换的窗口，按一下shift就可以返回之前的窗口了。
-
     用方向键移动窗口
-
     Alt+F7会激活移动窗口 功能 ，用方向键（上，下，左，右）就可以移到窗口了。
-
     编辑文本快捷键使用
-
     1. ctrl + k  #从光标开始到文本末剪切所有文本
     2. ctrl + y  #粘贴文本
     3. ctrl + e  #将光标移动到本行末尾
@@ -1033,11 +1116,9 @@ tar [-ABcdgGhiklmMoOpPrRsStuUvwWxzZ][-b <区块数目>][-C <目的目录>][-f <�
     2.卸载U盘
         使用如下命令卸载U盘：
         umount /dev/sdb
-
     3.格式化U盘
         使用如下命令格式化U盘：
         mkfs.fat /dev/sdb -I
-
     4.将ISO镜像文件写入到U盘
         使用如下命令将ISO文件写入到U盘：
         dd if=ubuntu-16.0.3-desktop-amd64.iso of=/dev/sdb
@@ -1138,7 +1219,7 @@ Memory Device
         Manufacturer: 00
         Serial Number: 00000000
         Asset Tag: Unknown
-        Part Number:                   
+        Part Number:16KTF1G64HZ-1G6E1
         Rank: Unknown
         Configured Clock Speed: 1333 MHz
 
@@ -1171,4 +1252,34 @@ cat /proc/diskstats
 cat /proc/interrupts 
 清空内存：
 echo 2 > /proc/sys/vm/overcommit_memory  
+
+#Linux下查看内存信息和查找DIMM型号的方法
+    因为网站开发的需求，需要对单位的服务器内存进行升级。经过向HP的在线技术人员咨询后，得知HP Proliant DL160 G6(QP661A)这台服务器，最大能支持单条RDIMMs为16G，UDIMMs为4G。  
+　　关于RDIMMs和UDIMMs的介绍在网上有大量的资料，在此就不在赘述了。  
+```
+dmidecode | grep -A16 "Memory Device"
+he@he-X230:~/pydev/doc$ sudo dmidecode | grep -A16 "Memory Device"
+Memory Device
+	Array Handle: 0x0007
+	Error Information Handle: Not Provided
+	Total Width: 64 bits
+	Data Width: 64 bits
+	Size: 8192 MB
+	Form Factor: SODIMM
+	Set: None
+	Locator: ChannelA-DIMM0
+	Bank Locator: BANK 0
+	Type: DDR3
+	Type Detail: Synchronous
+	Speed: 1600 MT/s
+	Manufacturer: Samsung
+	Serial Number: 0C84023B
+	Asset Tag: None
+	Part Number: 16KTF1G64HZ-1G6E1 
+```
+以上是LinuxMint系统上查询到的内存信息。其中，我们能得知，该内存是由Samsung生产的一条内存。那么内存到底是RDIMMs还是UDIMMs呢。我们可以根据Part Number：中那一串字符在集成电路的数据库中进行查找。网上也有很多免费资源。
+　　在下载到的datasheet上，找到了该内存的所有信息如下：
+
+附录：一个较好的IC资料查找网站：http://www.alldatasheet.com
+
 

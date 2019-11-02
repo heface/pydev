@@ -282,4 +282,85 @@ sudo reboot
 
 对于 TensorFlow 的多个版本，conda 包可使用多种 CUDA 版本。例如，对于 TensorFlow 1.10.0 版本，conda 包支持可用的 CUDA 8.0、9.0 和 9.2 库。而 pip 包仅支持 CUDA 9.0 库。在不支持 CUDA 库最新版本的系统上运行时，这非常重要。最后，由于这些库是通过 conda 自动安装的，用户可轻松创建多个环境，并对比不同 CUDA 版本的性能。
 
+#Intel MKL FATAL ERROR: Cannot load libmkl_avx.so or libmkl_def.so 解决方案
+conda install nomkl
+Are you using Anaconda? The problem might not be related with caffe. Try
+python -c 'import sklearn.linear_model.tests.test_randomized_l1'
+If you can reproduce the error, that means the problem is not related with caffe but anaconda.
+The latest version of numpy and scipy uses mkl by default. If you want to disable that, you can execute
+conda install nomkl
+that solves my problem. Hope that can solve yours, too.
+
+
+1. 以-f命令安装numpy，虽然我也不知道这是干嘛，
+conda install -f numpy
+2.安装mkl
+conda install mkl
+而我都试了不行，就千回路转找到了如下解决办法：
+百度了一下,似乎一般都是在运行scikit-learn或者其他需要运行cude的类库比如Theano,keras之类的.
+解决方案,建议更新你使用类库的的所有依赖包,尤其是mkl.或者直接所有类库也行     
+    conda install nomkl numpy scipy scikit-learn numexpr
+    conda remove mkl mkl-service
+
+# ImportError: numpy.core.multiarray failed to import
+  File "pycocotools\_mask.pyx", line 20, in init pycocotools._mask
+  File "__init__.pxd", line 1000, in numpy.import_array
+ImportError: numpy.core.multiarray failed to import
+出现这个错误的原因是numpy的版本太低了，因为我在自己电脑上用numpy1.14.2来生成的pyd文件，实际使用pyd的电脑版本是1.13.3，所以就出现了这个错误。
+查询numpy版本号方法：
+在python的IDE里输入：
+import numpy
+print numpy.version.version
+
+使用：
+pip install -U numpy
+就可以更新numpy版本了。
+如果你执行上面这个命令的时候提示你requirement satisfied的话，但是打印出来的版本号依旧是1.13.2，是因为在Anconda下，装了两个版本的numpy
+因为conda安装python的时候会安装1.13.2版本，pip会安装1.14.2版本，而我用conda和pip都安装过numpy，所以就出现这个问题。
+
+使用
+conda uninstall numpy
+卸载旧版本就好了。
+
+同样的错误，别人也遇见过
+Anaconda 错误：numpy.core.multiarray failed to import
+根据上面的操作，在我的情况下没有解决。
+但是提供了思路，就是旧包的存在问题。
+一直使用conda remove numpy
+重装了好几次，也没用。
+后来发现，之前有个numpy使用pip安装的。
+用pip uninstall numpy之后在进行conda安装就好了。
+
+
+#catboost安装
+(base) he@he-X230:~$ pip install catboost
+Looking in indexes: https://pypi.douban.com/simple/
+Collecting catboost
+  Downloading https://pypi.doubanio.com/packages/ee/eb/02fef81f77eab92991b275fff6789d9ebc93804c4300d4234f540817ef33/catboost-0.17.5-cp37-none-manylinux1_x86_64.whl (62.7MB)
+     |████████████████████████████████| 62.7MB 2.3MB/s 
+Requirement already satisfied: numpy>=1.16.0 in ./anaconda3/lib/python3.7/site-packages (from catboost) (1.16.4)
+Requirement already satisfied: scipy in ./anaconda3/lib/python3.7/site-packages (from catboost) (1.3.0)
+Collecting graphviz (from catboost)
+  Downloading https://pypi.doubanio.com/packages/94/cd/7b37f2b658995033879719e1ea4c9f171bf7a14c16b79220bd19f9eda3fe/graphviz-0.13-py2.py3-none-any.whl
+Requirement already satisfied: six in ./anaconda3/lib/python3.7/site-packages (from catboost) (1.12.0)
+Collecting plotly (from catboost)
+  Downloading https://pypi.doubanio.com/packages/70/19/8437e22c84083a6d5d8a3c80f4edc73c9dcbb89261d07e6bd13b48752bbd/plotly-4.1.1-py2.py3-none-any.whl (7.1MB)
+     |████████████████████████████████| 7.1MB 2.0MB/s 
+Requirement already satisfied: matplotlib in ./anaconda3/lib/python3.7/site-packages (from catboost) (3.1.0)
+Requirement already satisfied: pandas>=0.24.0 in ./anaconda3/lib/python3.7/site-packages (from catboost) (0.24.2)
+Collecting retrying>=1.3.3 (from plotly->catboost)
+  Downloading https://pypi.doubanio.com/packages/44/ef/beae4b4ef80902f22e3af073397f079c96969c69b2c7d52a57ea9ae61c9d/retrying-1.3.3.tar.gz
+Requirement already satisfied: cycler>=0.10 in ./anaconda3/lib/python3.7/site-packages (from matplotlib->catboost) (0.10.0)
+Requirement already satisfied: kiwisolver>=1.0.1 in ./anaconda3/lib/python3.7/site-packages (from matplotlib->catboost) (1.1.0)
+Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,>=2.0.1 in ./anaconda3/lib/python3.7/site-packages (from matplotlib->catboost) (2.4.0)
+Requirement already satisfied: python-dateutil>=2.1 in ./anaconda3/lib/python3.7/site-packages (from matplotlib->catboost) (2.8.0)
+Requirement already satisfied: pytz>=2011k in ./anaconda3/lib/python3.7/site-packages (from pandas>=0.24.0->catboost) (2019.1)
+Requirement already satisfied: setuptools in ./anaconda3/lib/python3.7/site-packages (from kiwisolver>=1.0.1->matplotlib->catboost) (41.0.1)
+Building wheels for collected packages: retrying
+  Building wheel for retrying (setup.py) ... done
+  Stored in directory: /home/he/.cache/pip/wheels/df/4c/87/b02f5d88d9f0eac032f30ef04e3acbee7962c0e58ceabb5877
+Successfully built retrying
+Installing collected packages: graphviz, retrying, plotly, catboost
+Successfully installed catboost-0.17.5 graphviz-0.13 plotly-4.1.1 retrying-1.3.3
+(base) he@he-X230:~$ 
 

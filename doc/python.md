@@ -5,7 +5,7 @@ pip国内的一些镜像：
   豆瓣(douban) https://pypi.douban.com/simple/
   清华大学 https://pypi.tuna.tsinghua.edu.cn/simple/
   中国科学技术大学 http://pypi.mirrors.ustc.edu.cn/simple/
-临时使用： 
+临时使用：
 　　在使用pip的时候在后面加上-i参数，指定pip源
 　　eg: pip install scrapy -i https://pypi.douban.com/simple/
 永久修改：
@@ -108,6 +108,18 @@ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/
 
 其他三方源
 对于conda的其他三方源，如有需要请在这个issue中提出请求，我们会综合考虑多方因素来酌情增减。
+
+#conda常用命令
+conda update -n base conda        //update最新版本的conda
+conda clean -p      //删除没有用的包
+conda clean -t      //tar打包
+conda --version  //检查conda版本
+conda update conda  //升级conda版本
+//假设你决定不再使用商业包IOPro。你可以在bunnies环境中移除它。
+conda remove -n bunnies iopro
+//我们不再需要snakes环境了，可以输入以下命令：
+conda remove -n snakes --all
+
 
 #Linux环境下VirtualENV安装和使用
 virtualenv用于创建独立的Python环境，多个Python相互独立，互不影响，它能够：
@@ -333,3 +345,86 @@ exit
 在使用pip的相关命令时，使用国内源的速度更快：如下是使用了清华的国内源。
  pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/ --user
 这样会将Python 程序包安装到 $HOME/.local 路径下，其中包含三个字文件夹：bin，lib 和 share。
+
+#conda更换kernel版本
+1 python -m pip install ipykernel
+python -m pip install ipykernel
+2 sudo python -m ipykernel install --name etc
+
+#pip升级已安装包
+python -m pip install --upgrade setuptools
+
+#如何解决Python包依赖问题
+##通过pip输出依赖  
+pip freeze > requirements.txt  
+这个命令可能是很多同学用来输出依赖的命令, 但它输出的是当前环境下的所有包, 也就是输出当前你安装的全部非Python标准库包  
+
+对于按项目建环境的同学, 这种输出方式是没有多大问题的  
+只要部署的时候在终端键入pip install -r requirements.txt就可以安装好依赖了, 但是对于没有严格区分项目环境的同学, 一次性安装了其他的包, 并不是一个好的解决方案.  
+##通过pipreqs库输出依赖
+如这个库的名称所示, 就是为了方便管理依赖而生.  
+与pip直接导出全部不同, pipreqs只导出指定项目下Python文件import的库  
+用法如下  
+```
+# 安装
+pip install pipreqs
+# 切换到项目目录
+# 输出requirements.txt到项目根目录下
+pipreqs --use-local ./
+```
+这里我切换到一个Django项目目录下, 打开requirements.txt, 内容是:  
+```
+pandas==0.22.0
+django_debug_toolbar.egg==info
+mongoengine==0.9.0
+Django==1.11.8
+```
+瞬间清爽不少.  
+#通过Pipenv管理依赖
+Pipenv, 汇集了Pip，Pipfile和Virtualenv的功能，是一个强大的命令行工具。  
+这里展示最简单的用法  
+
+    pip install pipenv安装好库.  
+    切换到项目根目录  
+    终端键入Pipenv install  
+
+如果你尚未建立requirements.txt那么将会得到一个空白的Pipfile文本文件, 此时我们在命令行中使用pipenv install 包名, 会在Pipefile写入对应包信息, 之后用户要安装依赖时, 使用pipenv install即可.
+如果你已经建立, 终端上会输出以下信息:
+
+requirements.txt found, instead of Pipfile! Converting…
+Warning: Your Pipfile now contains pinned versions, if your requirements.txt did. 
+We recommend updating your Pipfile to specify the "*" version, instead.
+...
+
+上面的输出意思是: 找到了requirements.txt, 但不是Pipfile, 正在转换...
+Pipefile现在将包含固定版本信息, 如果你的requirements.txt中已包含.
+我们推荐升级你的Pipefile到指定版本...
+
+输出Pipenv文件, 得到以下内容:
+
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+mongoengine = "==0.9.0"
+"django-debug-toolbar.egg" = "==info"
+django = "==1.11.8"
+pandas = "==0.22.0"
+
+[dev-packages]
+
+[requires]
+python_version = "3.6"
+
+可以清楚的看到整个文件结构, 第一个是[source]是安装库所在源, 第二个是依赖库的信息, 第三个是当你开发环境所需要的包, 最后一个是Python版本.
+当你需要区分开发环境和正式版本发布环境时, 可以使用以下命令:
+
+pipenv install --dev 包名
+
+如果正式版本发布时, 键入Pipenv install, 将不会安装dev标记的包
+除非其他开发人员键入Pipenv install -dev, 才会安装所有包.
+
+catboost req:
+Requires: scipy, numpy, six, plotly, matplotlib, graphviz, pandas
