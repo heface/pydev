@@ -432,6 +432,97 @@ Requires: scipy, numpy, six, plotly, matplotlib, graphviz, pandas
 
 
 #win7下virtualENV安装配置步骤
+win7设置pip镜像源：
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+注：pip配置文件位置-~/AppData/Romaing/pip/pip.ini
+
 1 安装python（不详述）
 2 安装virtualenvwrapper
 pip install virtualenvwrapper -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pip install virtualenvwrapper-win -i https://pypi.tuna.tsinghua.edu.cn/simple/   # windows
+
+3 新建虚拟环境test并指定python版本python3
+$ mkvirtualenv test --python=C:\Python36  -i https://pypi.tuna.tsinghua.edu.cn/simple/
+执行lsvirtualenv指令查看所有环境，环境test位于~/Envs/test
+$ lsvirtualenv
+test
+
+4 在项目底下激活虚拟环境test
+workon test
+5 其他指令
+退出环境test
+deactivate
+删除环境test
+rmvirtualenv test
+更多指令可以在shell中输入virtualenv回车会有提示
+
+
+
+1 前言
+由于Python的版本众多，还有Python2和Python3的争论，因此有些软件包或第三方库就容易出现版本不兼容的问题。
+通过 virtualenv 这个工具，就可以构建一系列 虚拟的Python环境 ，然后在每个环境中安装需要的软件包(配合 pip 使用)，这一系列的环境是相互隔离的。作为一个独立的环境就不容易出现版本问题，还方便部署。
+2 安装
+pip install virtualenv
+3 virtualenv的基本使用
+3.1 创建虚拟环境
+virtualenv venv
+为环境指定Python解释器:
+virtualenv -p c:\Python36\python.exe venv
+3.2 激活虚拟环境
+activate venv
+3.3 停止虚拟环境
+deactivate
+3.4 删除虚拟环境
+直接删除目录即可.
+rmvirtualenv venv
+4 virtualenvwrapper
+为了使用virtualenv更方便，可以借助 virtualenvwrapper
+4.1 安装virtualenvwrapper
+pip install virtualenvwrapper-win
+4.2 创建虚拟环境
+默认创建的虚拟环境位于C:\Users\username\envs,可以通过环境变量 WORKON_HOME 来定制。
+通过计算机-->属性-->高级系统设置-->环境变量-->在系统变量中新建“变量名”：WORKON_HOME,变量值：“你自定义的路径”。
+创建后，会自动激活环境，注意看Shell提示符的改变:
+(venv)c:>
+4.3列出所有虚拟环境
+lsvirtualenv
+4.4 激活虚拟环境
+workon venv
+4.5 进入虚拟环境目录
+cdvirtualenv
+4.6 进入虚拟环境的site-packages目录
+cdsitepackages
+4.7列出site-packages目录的所有软件包
+lssitepackages
+4.8 停止虚拟环境
+deactivate
+4.9 删除虚拟环境
+rmvitualenv venv
+5 重建Python环境
+5.1 冻结环境
+所谓 冻结(freeze) 环境，就是将当前环境的软件包等固定下来:
+pip freeze >packages.txt　　# 安装包列表保存到文件requirements.txt中
+5.2 重建环境
+重建(rebuild) 环境就是在部署的时候，在生产环境安装好对应版本的软件包，不要出现版本兼容等问题:
+pip install -r requirements.txt
+配合pip，可以批量安装对应版本的软件包，快速重建环境，完成部署。
+
+#不装anaconda安装jupyter notebook
+命令行切换到 D:\Python34\Scripts目录下
+窗口输入： pip install jupyter 
+命令行窗口输入： jupyter notebook
+
+jupyter notebook --generate-config 
+打开“.jupyter”文件夹，可以看到里面有个配置文件。
+修改jupyter_notebook_config.py配置文件
+　　打开这个配置文件，找到“c.NotebookApp.notebook_dir=……”，把路径改成自己的工作目录。
+## The directory to use for notebooks and kernels.
+c.NotebookApp.notebook_dir = 'D:\PythonDev\jupyterCode'
+这里有个前提，就是要配置Python34 的环境变量。方向如下：找到系统变量 path，编辑在最后加上 2 个路径，用分号隔开。
+D:\Python34
+D:\Python34\Scripts
+
+1 pip install pandas
+2 pip install jupyter
+3 pip install keras
+命令行输入:jupyter notebook 
