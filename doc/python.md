@@ -526,3 +526,20 @@ D:\Python34\Scripts
 2 pip install jupyter
 3 pip install keras
 命令行输入:jupyter notebook 
+
+#python一行命令开启http服务共享文件
+一个可以非常方便实用的，用来共享文件或者临时测试的方式。实现一个微型的HTTP服务程序来说是很简单的事情，
+在Python下，只需要一个命令行：
+python -m SimpleHTTPServer
+
+Python3的模块变了，Python3的用法：
+python -m http.server 8000
+
+这就行了，而python临时的HTTP服务在其默认的8000号端口上侦听。你会得到下面的信息：
+Serving HTTP on 0.0.0.0 port 8000 ...
+
+你可以打开你的浏览器，然后输入下面的IP+端口：
+http: //IP:8000
+
+如果你的目录下有一个叫 index.html 的文件名的文件，那么这个文件就会成为一个默认页，
+如果没有这个文件，那么，目录列表就会显示出来。

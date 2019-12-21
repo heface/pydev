@@ -1,0 +1,4 @@
+第一章代码问题：
+printf调用时，传入的字符串需要转换为byte数组，这是因为python3与python2的字符串是不一样的，py2中字符串就是字符数组，原生不支持UTF8；而py3为了支持utf8字符串和py2不一样了。
+第三章代码问题：
+创建进程原文中用的是kernel32.CreateProcessA，需要改成kernel32.CreateProcessW，其实仍然是字符串问题，CreateProcessW是支持宽字符的。
