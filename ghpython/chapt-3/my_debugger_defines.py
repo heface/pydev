@@ -2,6 +2,8 @@ from ctypes import *
 BYTE      = c_ubyte
 WORD      = c_ushort
 DWORD     = c_ulong
+FWORD     = c_ulong
+#FWORD     = c_ulonglong
 LPBYTE    = POINTER(c_ubyte)
 LPTSTR    = POINTER(c_char) 
 HANDLE    = c_void_p
@@ -168,30 +170,30 @@ class FLOATING_SAVE_AREA(Structure):
 # register values after a GetThreadContext() call
 class CONTEXT(Structure):
     _fields_ = [    
-        ("ContextFlags", DWORD),
-        ("Dr0", DWORD),
-        ("Dr1", DWORD),
-        ("Dr2", DWORD),
-        ("Dr3", DWORD),
-        ("Dr6", DWORD),
-        ("Dr7", DWORD),
+        ("ContextFlags", FWORD),
+        ("Dr0", FWORD),
+        ("Dr1", FWORD),
+        ("Dr2", FWORD),
+        ("Dr3", FWORD),
+        ("Dr6", FWORD),
+        ("Dr7", FWORD),
         ("FloatSave", FLOATING_SAVE_AREA),
-        ("SegGs", DWORD),
-        ("SegFs", DWORD),
-        ("SegEs", DWORD),
-        ("SegDs", DWORD),
-        ("Edi", DWORD),
-        ("Esi", DWORD),
-        ("Ebx", DWORD),
-        ("Edx", DWORD),
-        ("Ecx", DWORD),
-        ("Eax", DWORD),
-        ("Ebp", DWORD),
-        ("Eip", DWORD),
-        ("SegCs", DWORD),
-        ("EFlags", DWORD),
-        ("Esp", DWORD),
-        ("SegSs", DWORD),
+        ("SegGs", FWORD),
+        ("SegFs", FWORD),
+        ("SegEs", FWORD),
+        ("SegDs", FWORD),
+        ("Edi", FWORD),
+        ("Esi", FWORD),
+        ("Ebx", FWORD),
+        ("Edx", FWORD),
+        ("Ecx", FWORD),
+        ("Eax", FWORD),
+        ("Ebp", FWORD),
+        ("Eip", FWORD),
+        ("SegCs", FWORD),
+        ("EFlags", FWORD),
+        ("Esp", FWORD),
+        ("SegSs", FWORD),
         ("ExtendedRegisters", BYTE * 512),
     ]
 

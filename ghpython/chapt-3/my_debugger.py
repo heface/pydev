@@ -36,12 +36,10 @@ class debugger():
 
     def attach(self,pid):
         self.h_process = self.open_process(pid)
-        # We attempt to attach to the process
-        # if this fails we exit the call
         if kernel32.DebugActiveProcess(pid):
             self.debugger_active = True
             self.pid = int(pid)
-            self.run()
+            # self.run()
         else:
             print("[*] Unable to attach to the process.")
 
@@ -81,6 +79,7 @@ class debugger():
             return False
 
     def enumerate_threads(self):
+        print("pid:%d" % self.pid)
         thread_entry = THREADENTRY32()
         thread_list = []
         snapshot = kernel32.CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, self.pid)
@@ -90,20 +89,22 @@ class debugger():
             while success:
                 if thread_entry.th32OwnerProcessID == self.pid:
                     thread_list.append(thread_entry.th32ThreadID)
+                    
                 success = kernel32.Thread32Next(snapshot, byref(thread_entry))
             kernel32.CloseHandle(snapshot)
             return thread_list
-
         else:
             return False
 
         
-    def get_thread_context(self, thread_id):
+    def get_thread_context(self, thread_id=None, h_thread=None):
         context = CONTEXT()
         context.ContextFlags = CONTEXT_FULL | CONTEXT_DEBUG_REGISTERS
-        h_thread = self.open_thread(thread_id)
-        if kernel32.GetThreadContext(h_thread, byref(context)):
-            kernel32.CloseHandle(h_thread)
+        if h_thread is None:
+            self.h_thread = self.open_thread(thread_id)
+            
+        if kernel32.GetThreadContext(self.h_thread, byref(context)):
+            #kernel32.CloseHandle(self.h_thread)
             return context
         else:
             return False
@@ -112,16 +113,16 @@ class debugger():
         debug_event = DEBUG_EVENT()
         continue_status = DBG_CONTINUE
         if kernel32.WaitForDebugEvent(byref(debug_event), INFINITE):
-            self.h_thread = self.open_thread(debug_event.dwThread)
+            self.h_thread = self.open_thread(debug_event.dwThreadId)
             self.context = self.get_thread_context(self.h_thread)
             print("Event Code:%d Thread ID:%d" % \
-                  (debug_event.dwDebugEventCode, debug_event.dwThreadID))
+                  (debug_event.dwDebugEventCode, debug_event.dwThreadId))
 
             # If the event code is an exception, we want to
             # examine it further.
             if debug_event.dwDebugEventCode == EXCEPTION_DEBUG_EVENT:
                 # Obtain the exception code
-                self.exception = debug_event.u.Exception.ExceptionRecord.ExceptionCode
+                exception = debug_event.u.Exception.ExceptionRecord.ExceptionCode
                 self.exception_address = \
                     debug_event.u.Exception.ExceptionRecord.ExceptionAddress
                 if exception == EXCEPTION_ACCESS_VIOLATION:
@@ -130,15 +131,15 @@ class debugger():
                     # handler.
                 elif exception == EXCEPTION_BREAKPOINT:
                     continue_status = self.exception_handler_breakpoint()
-                elif ec == EXCEPTION_GUARD_PAGE:
+                elif exception == EXCEPTION_GUARD_PAGE:
                     print("Guard Page Access Detected.")
-                elif ec == EXCEPTION_SINGLE_STEP:
+                elif exception == EXCEPTION_SINGLE_STEP:
                     print("Single Stepping")
             
-            kernel32.ContinueDebugEvent(
-                debug_event.dwProcessId,
-                debug_event.dwThreadId,
-                continue_status)
+                kernel32.ContinueDebugEvent(
+                    debug_event.dwProcessId,
+                    debug_event.dwThreadId,
+                    continue_status)
             
 
 
