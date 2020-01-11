@@ -5,6 +5,11 @@ debugger = my_debugger.debugger()
 pid = input("Enter the PID of the process to attach to:")
 debugger.attach(int(pid))
 
+printf_address = debugger.func_resolve("msvcrt.dll", "printf")
+print("[*] Address of printf:0x%08x" % printf_address)
+debugger.bp_set(printf_address)
+
+'''
 list = debugger.enumerate_threads()
 print("thread count:%d" % len(list))
 # For each thread in the list we want to
@@ -28,6 +33,7 @@ for thread in list:
     print("[**] ECX: 0x%08x" % thread_context.Ecx)
     print("[**] EDX: 0x%08x" % thread_context.Edx)
     print("[*] END DUMP")
+'''
 
-#debugger.run()  aaaaaaaa  
+debugger.run()
 debugger.detach()

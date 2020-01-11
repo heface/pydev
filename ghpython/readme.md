@@ -75,4 +75,32 @@ BOOL WINAPI SetThreadContext(
     LPCONTEXT lpContext  
 );  
 
+读取目标进程的内存:  
+BOOL WINAPI ReadProcessMemory(  
+    HANDLE hProcess,
+    LPCVOID lpBaseAddress,
+    LPVOID lpBuffer,
+    SIZE_T nSize,
+    SIZE_T* lpNumberOfBytesRead
+);
+写入目标进程的内存:  
+BOOL WINAPI WriteProcessMemory(  
+    HANDLE hProcess,
+    LPCVOID lpBaseAddress,
+    LPCVOID lpBuffer,
+    SIZE_T nSize,
+    SIZE_T* lpNumberOfBytesWritten
+);
+
+获得函数地址  
+FARPROC WINAPI GetProcAddress(
+    HMODULE hModule,
+    LPCSTR lpProcName
+);
+
+获得模块句柄  
+HMODULE WINAPI GetModuleHandle(
+    LPCSTR lpModuleName
+)
+
 

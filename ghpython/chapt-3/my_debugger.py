@@ -12,7 +12,97 @@ class debugger():
         self.context = None
         self.exception = None
         self.exception_address = None
-                
+        self.breakpoints = {}
+        self.first_breakpoint = True
+        self.hardware_breakpoints = {}
+
+    def bp_set_hw(self, address, length, condition):
+        if length not in (1,2,4):
+            return False
+        else:
+            length -= 1
+
+        if condition not in (HW_ACCESS, HW_EXECUTE, HW_WRITE):
+            return False
+
+        if not self.hardware_breakpoints.has_key(0):
+            available = 0
+        elif not self.hardware_breakpoints.has_key(1):
+            available = 1
+        elif not self.hardware_breakpoints.has_key(2):
+            available = 2
+        elif not self.hardware_breakpoints.has_key(3):
+            available = 3
+        else:
+            return False
+
+        for thread_id in self.enumerate_threads():
+            context = self.get_thread_context(thread_id = thread_id)
+            context.Dr7 != 1 << (available * 2)
+
+        if available == 0:
+            context.Dr0 = address
+        elif available == 1:
+            context.Dr1 = address
+        elif available == 2:
+            context.Dr2 = address
+        elif available == 3:
+            context.Dr3 == address
+
+        context.Dr7 |= condition << ((available * 4) + 16)
+        context.Dr7 |= length << ((available * 4) + 18)
+
+        h_thread = self.open_thread(thread_id)
+        kernel32.SetThreadContext(h_thread, byref(context))
+
+        self.hardware_breakpoints[available] = (address, length, condition)
+        return True
+        
+    def read_process_memory(self,address,length):
+        data = ""
+        read_buf = create_string_buffer(length)
+        count = c_ulong(0)
+        if not kernel32.ReadProcessMemory(self.h_process,
+                                      address,
+                                      read_buf,
+                                      length,
+                                      byref(count)):
+            return False
+        else:
+            data += read_buf.raw
+            return data
+
+    def write_process_memory(self,address,data):
+        count = c_ulong(0)
+        length = len(data)
+        c_data = c_char_p(data[count.value:])
+        if not kernel32.WriteProcessMemory(self.h_process,
+                                       address,
+                                       c_data,
+                                       length,
+                                       byref(count)):
+            return False
+        else:
+            return True
+
+    # 设置断点
+    def bp_set(self,address):
+        if not self.breakpoints.has_key(address):
+            try:
+                original_byte = self.read_process_memory(address, 1)
+                self.write_process_memory(address, "\xCC")
+                self.breakpoints[address] = (address, original_byte)
+            except:
+                return False
+
+        return True
+
+    def func_resolve(self,dll,function):
+        handle = kernel32.GetModuleHandleA(dll)
+        address = kernel32.GetProcAddress(handle, function)
+        kernel32.CloseHandle(handle)
+        return address
+    
     def load(self, path_to_exe):
         #dwCreation flag determinies how to create the process
         creation_flags = DEBUG_PROCESS
@@ -53,10 +143,25 @@ class debugger():
         debug_event = DEBUG_EVENT()
         continue_status= DBG_CONTINUE
         if kernel32.WaitForDebugEvent(byref(debug_event),INFINITE):
-            # We aren't going to build any event handlers
-            # just yet. Let's just resume the process for now.
-            input("Press a key to continue...")
-            self.debugger_active = False
+            # input("Press a key to continue...")
+            #self.debugger_active = False
+            self.h_thread = self.open_thread(debug_event.dwThreadId)
+            self.context = self.get_thread_context(debug_event.h_thread)
+            print("Event Code: %d Thread ID: %d" % \
+                  debug_event.dwDebugEventCode, debug_event.dwThreadId)
+            if debug_event.dwDebugEventCode == EXCEPTION_DEBUG_EVENT:
+                exception = debug_event.u.Exception.ExceptionRecord.ExceptionCode
+                self.exception_address = debug_event.u.Exception.ExceptionRecord.ExceptionAddress
+                if exception == EXCEPTION_ACCESS_VIOLAION:
+                    print("Access Violation Detected.")
+                elif exception == EXCEPTION_BREAKPOINT:
+                    continue_status = self.exception_handler_breakpoint()
+                elif exception == EXCEPTION_GUARD_PAGE:
+                    print("Guard Page Access Detected.")
+                elif exception == EXCEPTION_SINGLE_STEP:
+                    print("Single Stepping.")
+                
+                        
             kernel32.ContinueDebugEvent( \
                 debug_event.dwProcessId, \
                 debug_event.dwThreadId, \
@@ -118,10 +223,7 @@ class debugger():
             print("Event Code:%d Thread ID:%d" % \
                   (debug_event.dwDebugEventCode, debug_event.dwThreadId))
 
-            # If the event code is an exception, we want to
-            # examine it further.
             if debug_event.dwDebugEventCode == EXCEPTION_DEBUG_EVENT:
-                # Obtain the exception code
                 exception = debug_event.u.Exception.ExceptionRecord.ExceptionCode
                 self.exception_address = \
                     debug_event.u.Exception.ExceptionRecord.ExceptionAddress
@@ -141,7 +243,6 @@ class debugger():
                     debug_event.dwThreadId,
                     continue_status)
             
-
 
     def exception_handler_breakpoint():
         print("[*] Inside the breakpoint handler.")
