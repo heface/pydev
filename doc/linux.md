@@ -1282,4 +1282,17 @@ Memory Device
 
 附录：一个较好的IC资料查找网站：http://www.alldatasheet.com
 
-
+#命令行播放音乐
+1、SOX，支持很多格式的音频文件，如 WAV,MP3,MPG,OGG,FLAC 
+2、安装：
+    sudo apt-get install sox
+3、询问你是否继续的时候输入 Y ，回车
+4、进入存放音乐的目录，比如，播放所有的.mp3文件命令：
+    play *mp3
+5、播放某个文件：
+    play  文件名.格式
+6、播放时，按下 Ctrl+C 把当前音频的播放转到下一个音频
+7、重复播放音频:
+play  file.mp3  repeat 2   表示重复播放两次,0表示无限次
+8、帮助
+    man sox
