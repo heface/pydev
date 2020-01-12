@@ -87,7 +87,8 @@ class debugger():
 
     # 设置断点
     def bp_set(self,address):
-        if not self.breakpoints.has_key(address):
+        #if not self.breakpoints.has_key(address):
+        if address not in self.breakpoints:
             try:
                 original_byte = self.read_process_memory(address, 1)
                 self.write_process_memory(address, "\xCC")
