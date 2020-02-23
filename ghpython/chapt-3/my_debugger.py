@@ -210,7 +210,8 @@ class debugger():
             self.h_thread = self.open_thread(thread_id)
             
         if kernel32.GetThreadContext(self.h_thread, byref(context)):
-            #kernel32.CloseHandle(self.h_thread)
+            #3.2 输出寄存器信息，否则注释closehandle
+            kernel32.CloseHandle(self.h_thread)
             return context
         else:
             return False

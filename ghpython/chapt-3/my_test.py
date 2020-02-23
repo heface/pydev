@@ -5,11 +5,12 @@ debugger = my_debugger.debugger()
 pid = input("Enter the PID of the process to attach to:")
 debugger.attach(int(pid))
 
-printf_address = debugger.func_resolve("msvcrt.dll", "printf")
-print("[*] Address of printf:0x%08x" % printf_address)
-debugger.bp_set(printf_address)
+#printf_address = debugger.func_resolve("msvcrt.dll", "printf")
+#print("[*] Address of printf:0x%08x" % printf_address)
+#debugger.bp_set(printf_address)
 
 '''
+# 3.2输出寄存器信息
 list = debugger.enumerate_threads()
 print("thread count:%d" % len(list))
 # For each thread in the list we want to
