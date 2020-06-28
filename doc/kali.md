@@ -93,3 +93,18 @@ msfconsole
 ##更新
 apt-get  install metasploit-framework
 msfupdate
+
+# C调用pow时报错
+用了pow函数，头文件中也包含了<math.h>文件，但是在编译时，gcc -o ippanduan ippanduan.c  一直提示如下错误：
+        /tmp/ccARJLRg.o: In function `main':
+        ippanduan.c:(.text+0x180): undefined reference to `pow'
+        collect2: error: ld returned 1 exit status
+
+解决办法：
+在编译语句的最后面加上 -lm，问题即可解决：
+        gcc -o ippanduan ippanduan.c -lm
+成功编译通过。
+
+-lm是告诉gcc将代码与math库链接。
+lm的意思是library math
+查看/lib或/usr/lib。 这些库都被命名为lib<name>.a或lib<name>.so。<name>是-l之后的引用的库名。 在这种情况下，数学库名为libm.so，因此我们称之为-lm。
