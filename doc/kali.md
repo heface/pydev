@@ -107,4 +107,19 @@ msfupdate
 
 -lm是告诉gcc将代码与math库链接。
 lm的意思是library math
-查看/lib或/usr/lib。 这些库都被命名为lib<name>.a或lib<name>.so。<name>是-l之后的引用的库名。 在这种情况下，数学库名为libm.so，因此我们称之为-lm。
+查看/lib或/usr/lib。 这些库都被命名为lib<name>.a或lib<name>.so。<name>是-l之后的引用的库名。 
+在这种情况下，数学库名为libm.so，因此我们称之为-lm。
+
+# include <time.h> but CLK_TCK undeclared
+Macro: int CLK_TCK
+This is an obsolete name for CLOCKS_PER_SEC.
+SEE : http://kirste.userpage.fu-berlin.de/chemnet/use/info/libc/libc_17.html
+#include <time.h>
+
+clock_t start, end;
+double elapsed;
+
+start = clock();
+... /* Do the work. */
+end = clock();
+elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
