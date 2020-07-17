@@ -1346,3 +1346,13 @@ ALX+X hexl-mode-exit
 vi -b <file> 可以编辑
 
 7、hexedit(redhat自带16进制编辑器) 
+
+# chm文件查看
+1 KchmViewer 
+这个是kde下出色一个chm阅读器，相比较于chmsee出现中文乱马的情况而言，这个可以说是完美了。
+安装：
+sudo apt-get install kchmviewer
+
+2 xchm 
+xCHM 是跨平台的 CHM 文件查看器，是免费开源软件。主要特性包括：显示目录、打印页面、改变字体及大小、支持书签和搜索等等。
+安装：sudo apt-get install xchm（Ubuntu15.04 貌似打不开）
